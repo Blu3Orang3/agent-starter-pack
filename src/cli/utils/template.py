@@ -29,6 +29,7 @@ from rich.prompt import IntPrompt, Prompt
 from src.cli.utils.version import get_current_version
 
 from .datastores import DATASTORES
+from .platform_utils import create_platform_specific_scripts
 from .remote_template import (
     get_base_template_name,
     render_and_merge_makefiles,
@@ -671,6 +672,9 @@ def process_template(
                     cookiecutter_config=cookiecutter_config,
                     remote_template_path=remote_template_path,
                 )
+
+                # Create cross-platform build scripts for Windows compatibility
+                create_platform_specific_scripts(final_destination)
 
                 # Delete appropriate files based on ADK tag
                 if "adk" in tags:
